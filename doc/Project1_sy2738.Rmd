@@ -56,7 +56,7 @@ spooky_cl <- anti_join(spooky_cl,stop_words,by = "word")
 
 First, let's analyze the text structure first.
 ##### Numbers of text, sentences length and words length
-```{r word/structure length, echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 p1 <- ggplot(spooky) +
       geom_bar(aes(author, fill = author)) +
       theme(legend.position = "none")
@@ -104,7 +104,7 @@ Many literary criticisms hold that HPL uses a lot of adjective words and critici
 
 ##### Proportion of part of speech  
 
-```{r pos freq+prop, echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 data_all <- count(group_by(data,pos,author))
 data_all <- data_all %>% filter(pos != "X")
 
@@ -131,7 +131,7 @@ It is `time`!
 
 ##### Word Cloud of EAP, HPL and MWS
 
-```{r word cloud, echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 words <- count(spooky_word,word)
 colnames(words) <- c("word","freq")
 
@@ -142,7 +142,7 @@ In this word cloud picture, it is obvious that "time", "night", "life", "day"...
 
 ##### Word Cloud of EAP  
 
-```{r EAP word cloud, echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 word_author_EAP <- filter(spooky_word, author == "EAP")
 word_author_HPL <- filter(spooky_word, author == "HPL")
 word_author_MWS <- filter(spooky_word, author == "MWS")
@@ -156,7 +156,7 @@ wordcloud(words$word,words$freq,max.words = 30,color = c("red4", "black"))
 In EAP's word cloud, the most frequent word is "found","day","time","length"... It seems too normal for a spooky novel.  
 
 ##### Word Cloud of HPL
-```{r HPL word cloud, echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 words <- count(word_author_HPL,word)
 colnames(words) <- c("word","freq")
 
@@ -168,7 +168,7 @@ HPL loves "night" and "time "too! Different from EAP, HPL has some words related
 ##### Word Cloud of MWS
   
 MWS talks more about positive words: "love", "hope","friend", "heart" as well as some spooky words: "fear", "death", "passed", "perdita". It is easy to infer that the author is woman when you only see this word cloud plot, because the words are more emotional.  
-```{r MWS word cloud, echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 words <- count(word_author_MWS,word)
 colnames(words) <- c("word","freq")
 
@@ -180,7 +180,7 @@ wordcloud(words$word,words$freq,max.words = 30,color = c("red4", "black"))
 
 Secondly, I compared the word frequencies of EAP, HPL and MWS. I calculate the proportion of HPL and MWS's word frequencies of EAP's.  
 ##### Proportion of HPL and MWS of EAP 
-```{r cor plot(freq+prop), echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 word_author <- count(group_by(spooky_cl, word, author))
 
 frequency <- word_author %>% group_by(author) %>% mutate(proportion = n/sum(n)) %>% select(-n) %>% spread(author,proportion) %>% gather(author,proportion, "HPL":"MWS")
